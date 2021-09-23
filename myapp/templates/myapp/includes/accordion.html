@@ -1,0 +1,7 @@
+<div class="accordion accordion-flush" id="qstn-acc">
+  {% for question in questions %}
+    {% include 'myapp/includes/accordion-item.html' with question=question %}
+  {% empty %}
+    No question is available form this page
+  {% endfor %}
+</div>

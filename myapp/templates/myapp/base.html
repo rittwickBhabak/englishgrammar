@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/static/book.png" type="image/png">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <title>{% block page_title %}{% endblock page_title %}</title>
+    {% block page_style %}{% endblock page_style %}
+    {% block css_files %}{% endblock css_files %}
+  </head>
+  <body class="bg-dark text-white">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'chapter-list-page' %}">Home</a>
+            </li>
+            {% comment %} <li class="nav-item">
+                <a class="nav-link" href="{% url 'practice-test-list' %}">Practice</a>
+            </li> {% endcomment %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:index' %}" target="_blank">Admin</a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin/myapp/chapter/add/" class="nav-link" target="_blank">Add Chapter</a>
+            </li>
+            {% block page_navigation %}{% endblock page_navigation %}
+            </ul>
+        </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+    {% block page_content %}{% endblock page_content %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'myapp/base.html' %}
+
+{% block page_title %}All Chapters{% endblock page_title %}
+{% block page_style %}
+<style>
+    #chapter-list {
+        list-style-type: none;
+    }
+    ul#chapter-list > li > a {
+        text-decoration: none;
+    }
+
+</style>
+{% endblock page_style %}
+{% block css_files %}{% endblock css_files %}
+{% block page_content %}
+<div class="row mt-3">
+<ul class="m-auto d-block text-start overflow-visible offset-2 col-8" id="chapter-list">
+{% for chapter in chapters %}
+    <li class="display-6 mb-2"><a href="{% url 'chapter-detail-page' chapter.static_folder chapter.last_read_page %}" class="text-white">Chapter {{chapter.slno}} : {{chapter.title|upper}}</a></li>
+{% endfor %}
+</ul>
+</div>
+
+{% endblock page_content %}

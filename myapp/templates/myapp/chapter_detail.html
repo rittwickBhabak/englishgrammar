@@ -1,0 +1,140 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block page_title %} {{chapter.title }}{% endblock page_title %}
+{% block page_style %}
+<style>
+    iframe {
+        height: 90vh;
+
+    }
+
+    #right::-webkit-scrollbar {
+        display: none;
+    }
+
+    #right {
+        height: 90vh;
+        overflow-y: scroll;
+        padding-bottom: 50px;
+    }
+
+    .accordion-button:focus,
+    .accordion-button::selection {
+        outline: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+        border: 1px dashed white !important;
+        border-bottom: none !important;
+    }
+
+    .accordion-collapse.show, .addcordion-collapse:not(.collapse) {
+        border: 1px dashed white !important;
+        border-top: none !important;
+    }
+</style>
+{% endblock page_style %}
+{% block css_files %}{% endblock css_files %}
+
+
+{% block page_navigation %}
+<li class="nav-item d-flex align-items-center">
+    <a href="{% url 'chapter-detail-page' chapter.static_folder prev_page_no %}"
+        class="nav-link btn btn-secondary btn-sm pb-0 pt-0 text-white">&lt; Prev</a>
+</li>
+&nbsp;
+<li class="nav-item d-flex align-items-center">
+    <a href="{% url 'chapter-detail-page' chapter.static_folder next_page_no %}"
+        class="nav-link btn btn-secondary btn-sm pb-0 pt-0 text-white">Next &gt;</a>
+</li>
+
+{% endblock page_navigation %}
+
+{% block page_content %}
+
+<div class="row">
+    <div class="col-md-8 col-12" id="left">
+        <iframe class="w-100" src="/static/pages/{{chapter.static_folder}}/{{page_no}}.pdf#toolbar=0&navpanes=0"
+            frameBorder="0"></iframe>
+    </div>
+
+    <div class="col-md-4 col-12 pr-1" id="right">
+        <form id="add-qsnt-form" class="pb-2 border-bottom">
+            <input type="text" class="form-control mb-2" name="question" id="question" placeholder="Enter question">
+            <input type="text" class="form-control mb-2" name="answer" id="answer" placeholder="Enter answer">
+            <input type="number" value="{{page_no}}" id="page-no" hidden>
+            <input type="number" value="{{chapter.pk}}" id="chapter-pk" hidden>
+            <input type="submit" value="Add">
+        </form>
+
+        <!-- ADD QUESTION FORM SUBMISSION -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+        <script>
+            const form = document.querySelector('#add-qsnt-form')
+
+            form.addEventListener('submit', e => {
+                e.preventDefault()
+                if (document.querySelector('#question').value.trim() !== '' && document.querySelector('#answer').value.trim() !== '') {
+                    let data = new FormData(); // 2
+
+                    data.append("question", document.querySelector('#question').value)
+                    data.append("answer", document.querySelector('#answer').value)
+                    data.append("page_no", document.querySelector('#page-no').value)
+                    data.append("chapter_pk", document.querySelector('#chapter-pk').value)
+                    data.append("csrfmiddlewaretoken", '{{csrf_token}}')
+
+                    axios.post('/add-question', data)
+                        .then(res => {
+                            if (res.data['status'] == 'success') {
+                                window.location.reload()
+                            }
+                        })
+                        .catch(errors => {
+
+                        })
+                }
+            })
+        </script>
+
+        <!-- KEY BINDING -->
+        <script>
+            const question = document.querySelector('#question')
+            const answer = document.querySelector('#answer')
+            question.addEventListener('focus', e=>{e.target.classList.add('focused')})
+            question.addEventListener('blur', e=>{e.target.classList.remove('focused')})
+            answer.addEventListener('focus', e=>{e.target.classList.add('focused')})
+            answer.addEventListener('blur', e=>{e.target.classList.remove('focused')})
+            document.addEventListener('keypress', (e)=>{
+                const key = e.key.toLowerCase()
+                if(key=='q'){
+                    if(!question.classList.contains('focused')){
+                        question.focus()
+                        let prev_value = question.value 
+                        setTimeout(()=>{
+                            question.value = prev_value.slice(0, prev_value.length)
+                        }, 0)
+                    }
+                }
+                if(key=='a'){
+                    if(!answer.classList.contains('focused')){
+                        answer.focus()
+                        let prev_value = answer.value 
+                        setTimeout(()=>{
+                            answer.value = prev_value.slice(0, prev_value.length)
+                        }, 0)
+                    }
+                }
+            })
+
+        </script>
+        <p class="lead">Questions <span id="question-add-failed" class="text-danger small d-none">Question addition
+                failed!</span></p>
+        <div id="questions">
+            {% include 'myapp/includes/accordion.html' with questions=questions %}
+        </div>
+    </div>
+</div>
+
+{% endblock page_content %}
