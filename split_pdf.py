@@ -1,5 +1,5 @@
 from PyPDF2 import PdfFileWriter, PdfFileReader
-import os 
+import os
 def split_pdf(input_file_path, output_folder):
     inputpdf = PdfFileReader(open(input_file_path, "rb"))
 
@@ -13,4 +13,4 @@ def split_pdf(input_file_path, output_folder):
 
 
 if __name__=="__main__":
-    split_pdf('16. More about Prepositions.pdf', 'pages')
+    split_pdf('input.pdf', os.path.join(os.getcwd(), 'static', 'pages', 'words-commonly-confused'))
