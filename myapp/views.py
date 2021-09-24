@@ -15,7 +15,7 @@ def chapter_detail(request, slug, page_no):
         page_no = 1
     next_page_no = page_no + 1
     prev_page_no = page_no - 1
-    if prev_page_no >= 0:
+    if prev_page_no <= 0:
         prev_page_no = 1
 
     context = {

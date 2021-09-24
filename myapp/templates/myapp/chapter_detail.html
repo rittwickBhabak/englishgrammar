@@ -41,12 +41,12 @@
 
 {% block page_navigation %}
 <li class="nav-item d-flex align-items-center">
-    <a href="{% url 'chapter-detail-page' chapter.static_folder prev_page_no %}"
+    <a href="{% if first_page %} #! {% else %} {% url 'chapter-detail-page' chapter.static_folder prev_page_no %}{% endif %}"
         class="nav-link btn btn-secondary btn-sm pb-0 pt-0 text-white">&lt; Prev</a>
 </li>
 &nbsp;
 <li class="nav-item d-flex align-items-center">
-    <a href="{% url 'chapter-detail-page' chapter.static_folder next_page_no %}"
+    <a href="{% if last_page %} #! {% else %} {% url 'chapter-detail-page' chapter.static_folder next_page_no %} {% endif %}"
         class="nav-link btn btn-secondary btn-sm pb-0 pt-0 text-white">Next &gt;</a>
 </li>
 
@@ -62,12 +62,48 @@
 
     <div class="col-md-4 col-12 pr-1" id="right">
         <form id="add-qsnt-form" class="pb-2 border-bottom">
-            <input type="text" class="form-control mb-2" name="question" id="question" placeholder="Enter question">
-            <input type="text" class="form-control mb-2" name="answer" id="answer" placeholder="Enter answer">
+            <input type="text" class="form-control mb-2 input-elem" name="question" id="question" placeholder="Enter question">
+            <input type="text" class="form-control mb-2 input-elem" name="answer" id="answer" placeholder="Enter answer">
             <input type="number" value="{{page_no}}" id="page-no" hidden>
             <input type="number" value="{{chapter.pk}}" id="chapter-pk" hidden>
             <input type="submit" value="Add">
+            <div id="selected-text" class="text-white d-inline"></div>
+            <div class="d-inline">
+            <!-- google translate -->
+
+                <div id="google_translate_element"></div>
+                <script type="text/javascript">
+                function googleTranslateElementInit() {
+                    new google.translate.TranslateElement(
+                        { pageLanguage: 'en' },
+                        'google_translate_element'
+                    );
+                }
+                var t = '';
+                var inputElems = document.querySelectorAll('.input-elem')
+                inputElems.forEach(elem => {
+                    elem.addEventListener('change', ()=>{
+                        document.getElementById('selected-text').innerText = elem.value
+                    })
+                })
+                // function gText(e) {
+                //     t = (document.all) ? document.selection.createRange().text : document.getSelection();
+
+                //      = t.toString();
+                //     // console.log(t.toString())
+                // }
+
+                // document.onmouseup = gText;
+                // if (!document.all) document.captureEvents(Event.MOUSEUP);
+
+                </script>
+
+                <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            </div>
         </form>
+
+
+
 
         <!-- ADD QUESTION FORM SUBMISSION -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
@@ -134,7 +170,9 @@
         <div id="questions">
             {% include 'myapp/includes/accordion.html' with questions=questions %}
         </div>
+
     </div>
 </div>
+
 
 {% endblock page_content %}
