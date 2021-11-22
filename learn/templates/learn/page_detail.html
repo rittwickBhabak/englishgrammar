@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block page_title %} {{chapter.title}} - Page {{page_no}} {% endblock page_title %}
+
+
+{% block page_content %}
+
+<div class="row">
+    <div class="col-8">
+        <img src="https://raw.githubusercontent.com/my-personal-repos/english-grammar-book/main/chapter-{{chapter_pk}}/{{page_no}}.jpg" class="w-100" alt="">
+    </div>
+
+    <div class="col-4">
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'learn:page-detail' chapter_pk prev_page %}" class="btn btn-primary d-flex align-items-center">&lt; Prev</a>
+            <div class="d-flex flex-column justify-content-center text-center">
+                <div>
+                    <b><a href="{% url 'learn:chapter-detail' chapter_pk %}">{{chapter.title}}</a></b> 
+                </div>
+                <div>
+                    <span class="lead">Page {{page_no}} of {{chapter.no_of_pages}}</span>
+                </div>
+            </div>
+            <a href="{% url 'learn:page-detail' chapter_pk next_page %}" class="btn btn-primary d-flex align-items-center">Next &gt;</a>
+        </div>
+        <hr>
+        <div class="{% if is_completed == False %} {% else %} d-none {% endif %}">
+            <h6>Add Question</h6>
+            <form action="{% url 'learn:add-question' %}" method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="rule" name="rule" placeholder="Enter Rule">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="question" name="question" placeholder="Enter Question">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="answer" name="answer" placeholder="Enter Answer">
+                </div>
+                <!-- {{chapter_pk}}, {{page_no}} -->
+                <input type="number" name="chapter_pk" id="chapter_pk" hidden value="{{chapter_pk}}">
+                <input type="number" name="page_no" id="page_no" hidden value="{{page_no}}">
+                <div class="d-flex flex-row-reverse">
+                    <input type="submit" value="Save" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+        <hr>
+        <h6>Questions</h6>
+        <div class="mt-1">
+        {% for question in question_list %}
+        {% include 'learn/includes/accordion-item.html' with counter=forloop.counter question=question %}
+        {% empty %}
+            <p class="lead">No Question Available till now </p>
+        {% endfor %}
+        </div>
+        <br>
+        <div>
+            <form action="{% url 'learn:toggle-completion' %}" method="POST" id="completion-form">
+                {% csrf_token %}
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" name="is_completed" role="switch" id="page-completed" name="page-completed" {% if is_completed == False %}  {% else %} checked {% endif %}>
+                    <input type="hidden" name="chapter_pk" value="{{chapter_pk}}">
+                    <input type="hidden" name="page_no" value="{{page_no}}">
+                    <label class="form-check-label" for="page-completed">{% if is_completed == False %}Page Not Completed {% else %}Page Completed{% endif %}</label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock page_content %}
+
+
+
+
+{% block page_script %}
+
+<script>
+
+let switchBtn = document.querySelector('#page-completed')
+let form = document.querySelector('#completion-form')
+switchBtn.addEventListener('click', e=>{
+    form.submit()
+    console.log('changing')
+})
+
+
+</script>
+
+
+{% endblock page_script %}

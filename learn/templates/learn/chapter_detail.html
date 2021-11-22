@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block page_title %} {{chapter.title}} {% endblock page_title %}
+
+
+{% block page_content %}
+
+<div class="container">
+<h1 class="text-center">{{chapter.title}}</h1>
+
+{% for page_number, chapter_pk in page_number_list %}
+    {% comment %} <span class="badge btn btn-primary">Go to page <a href="">{{page_number}}</a></span> {% endcomment %}
+    <a href="{% url 'learn:page-detail' chapter_pk page_number %}" class="btn btn-primary mb-3">Go to page {{page_number}}</a>
+{% endfor %}
+
+<br>
+<a href="{% url 'learn:edit-chapter' chapter.pk %}">Update Chapter</a>
+</div>
+
+
+
+{% endblock page_content %}
+
+
+
+
+{% block page_script %}{% endblock page_script %}

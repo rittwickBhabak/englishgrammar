@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block page_title %} All Chapters {% endblock page_title %}
+
+
+{% block page_content %}
+
+<div class="container">
+{% for chapter in chapter_list %}
+
+<h4><a href="{% url 'learn:chapter-detail' chapter.pk %}" class="no-underline">Chapter {{chapter.slno}} : {{chapter.title}}</a></h4>
+
+{% endfor %}
+</div>
+
+
+{% endblock page_content %}
+
+
+
+
+{% block page_script %}{% endblock page_script %}
