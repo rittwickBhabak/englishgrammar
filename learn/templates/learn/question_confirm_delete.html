@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+
+{% block page_title %}Confirm Delete Question{% endblock page_title %}
+
+
+{% block page_content %}
+<div class="container">
+    <h1>Confirm Delete Question?</h1>
+    <p class="lead">Question: {{question.question}}</p>
+    <p class="lead">Answer: {{question.answer}}</p>
+    <p class="lead">Rule: {{question.rule}}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="submit" value="Delete" class="btn btn-danger">
+        <a href="{% url 'learn:page-detail' question.chapter.pk question.page_no %}" class="btn btn-primary">Cancel</a>
+        <a href="{% url 'learn:edit-question' question.pk %}" class="btn btn-warning">Rather Edit</a>
+    </form>
+
+</div>
+
+
+
+{% endblock page_content %}

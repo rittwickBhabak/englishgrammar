@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block page_title %} English Grammar {% endblock page_title %}
+
+
+{% block page_content %}
+
+<div class="container">
+
+    <div class="accordion" id="question-accrodion">
+        {% for question in question_list %}
+            {% include 'learn/includes/accordion-item.html' with counter=forloop.counter question=question %}
+        {% empty %}
+            <p class="lead">No Question Available till now </p>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock page_content %}
+
+
+
+
+{% block page_script %}{% endblock page_script %}

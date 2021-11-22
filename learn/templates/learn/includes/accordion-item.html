@@ -1,0 +1,27 @@
+<div class="accordion-item">
+    <h2 class="accordion-header" id="heading-{{counter}}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{counter}}" aria-expanded="false" aria-controls="collapse-{{counter}}">
+        {{question.question}} {% if question.is_bookmarked %} &nbsp;<i class="bi bi-bookmark-fill"></i>{% endif %}
+      </button>
+    </h2>
+    <div id="collapse-{{counter}}" class="accordion-collapse collapse" aria-labelledby="heading-{{counter}}" data-bs-parent="#question-accrodion">
+      <div class="accordion-body">
+        Answer: {{question.answer}}
+        <br>
+        Rule: {{question.rule}}
+        <br>
+        <div class="d-flex flex-row-reverse">
+            <div class="btn-group" role="group">
+              <button id="btnGroupDrop-{{counter}}" type="button" class="btn-blank" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="btnGroupDrop-{{counter}}">
+                <li><form class="dropdown-item px-2" action="{% url 'learn:toggle-bookmark' question.pk %}" method="POST">{% csrf_token %}<input type="submit" value="{% if question.is_bookmarked %}Remove {% endif %}Bookmark" class="btn-blank"></form></li>
+                <li><a class="dropdown-item" href="{% url 'learn:edit-question' question.pk %}">Edit</a></li>
+                <li><a class="dropdown-item" href="{% url 'learn:delete-question' question.pk %}">Remove</a></li>
+              </ul>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

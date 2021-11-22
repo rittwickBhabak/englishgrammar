@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block page_title %}Edit Question of chapter {{question.chapter.title}}{% endblock page_title %}
+
+{% block page_content %}
+
+    <div class="container">
+        <h1>Edit Question</h1>
+        <form action="{% url 'learn:edit-question' question.pk %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="question" class="form-label">Question</label>
+                <input type="text" class="form-control" id="question" name="question" value="{{question.question}}">
+            </div>
+            <div class="mb-3">
+                <label for="answer" class="form-label">Answer</label>
+                <input type="text" class="form-control" id="answer" name="answer" value="{{question.answer}}">
+            </div>
+            <div class="mb-3">
+                <label for="rule" class="form-label">Rule</label>
+                <input type="text" class="form-control" id="rule" name="rule" value="{{question.rule}}">
+            </div>
+            <input type="hidden" name="question_pk" value="{{question.pk}}">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+
+{% endblock page_content %}
