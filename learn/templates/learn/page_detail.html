@@ -2,6 +2,14 @@
 
 {% block page_title %} {{chapter.title}} - Page {{page_no}} {% endblock page_title %}
 
+{% block page_style %}
+<style>
+#question-sidebar::-webkit-scrollbar{
+     width: 0 !important
+}
+</style>
+
+{% endblock page_style %}
 
 {% block page_content %}
 
@@ -10,7 +18,7 @@
         <img src="https://raw.githubusercontent.com/my-personal-repos/english-grammar-book/main/chapter-{{chapter_pk}}/{{page_no}}.jpg" class="w-100" alt="">
     </div>
 
-    <div class="col-4 position-fixed end-0">
+    <div class="col-4 position-fixed end-0 overflow-auto border-bottom pb-5" id="question-sidebar" style="max-height:85vh;">
         <div class="d-flex justify-content-between">
             <a href="{% url 'learn:page-detail' chapter_pk prev_page %}" class="btn btn-primary d-flex align-items-center">&lt; Prev</a>
             <div class="d-flex flex-column justify-content-center text-center">
