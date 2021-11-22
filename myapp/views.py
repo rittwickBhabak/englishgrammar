@@ -29,6 +29,8 @@ def chapter_detail(request, slug, page_no):
         "next_page_no": next_page_no,
         "prev_page_no": prev_page_no,
     }
+    # chapter.last_read_page = int(page_no)
+    # chapter.save()
     return render(request, "myapp/chapter_detail.html", context=context)
 
 
