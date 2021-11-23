@@ -18,6 +18,8 @@ INSTALLED_APPS = [
     # 'django.contrib.staticfiles',
     'learn',
     'practice',
+    'api',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
