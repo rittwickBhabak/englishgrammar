@@ -4,6 +4,7 @@
 
 {% block page_style %}
 <style>
+#main-div::-webkit-scrollbar,
 #question-sidebar::-webkit-scrollbar{
      width: 0 !important
 }
@@ -13,9 +14,9 @@
 
 {% block page_content %}
 
-<div class="row">
+<div class="row" id="main-div">
     <div class="col-8">
-        <img src="https://raw.githubusercontent.com/my-personal-repos/english-grammar-book/main/chapter-{{chapter_pk}}/{{page_no}}.jpg" class="w-100" alt="">
+        <img src="https://raw.githubusercontent.com/my-personal-repos/english-grammar-book/main/chapter-{{chapter_pk}}/{{page_no}}.jpg" class="w-100 border" alt="">
     </div>
 
     <div class="col-4 position-fixed end-0 overflow-auto border-bottom pb-5" id="question-sidebar" style="max-height:85vh;">
@@ -37,7 +38,7 @@
             <form action="{% url 'learn:add-question' %}" method="POST">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <input type="text" class="form-control" id="rule" name="rule" placeholder="Enter Rule">
+                    <input type="text" class="form-control" id="rule" name="rule" placeholder="Enter Rule" autofocus>
                 </div>
                 <div class="mb-3">
                     <input type="text" class="form-control" id="question" name="question" placeholder="Enter Question">
@@ -63,7 +64,7 @@
         {% endfor %}
         </div>
         <br>
-        <div>
+        <div class="d-flex justify-content-between">
             <form action="{% url 'learn:toggle-completion' %}" method="POST" id="completion-form">
                 {% csrf_token %}
                 <div class="form-check form-switch">
@@ -73,10 +74,30 @@
                     <label class="form-check-label" for="page-completed">{% if is_completed == False %}Page Not Completed {% else %}Page Completed{% endif %}</label>
                 </div>
             </form>
+            <div>
+                <button type="button" class="btn-blank" data-bs-toggle="modal" data-bs-target="#page-fullscreen"><i class="bi bi-fullscreen"></i></button>
+            </div>
         </div>
     </div>
 </div>
 
+
+<div class="modal fade" id="page-fullscreen" tabindex="-1" aria-labelledby="page-fullscreenLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable  modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="page-fullscreenLabel"> {{chapter.title}} - Page {{page_no}} </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img src="https://raw.githubusercontent.com/my-personal-repos/english-grammar-book/main/chapter-{{chapter_pk}}/{{page_no}}.jpg" class="w-100" alt="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+</div>
 
 {% endblock page_content %}
 
