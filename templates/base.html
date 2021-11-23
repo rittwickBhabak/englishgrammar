@@ -39,9 +39,9 @@
                 <li class="nav-item">
                 <a class="nav-link" href="{% url 'learn:chapter-list' %}">Chapters</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'api:random-question' %}">Api</a>
-                </li> 
+                {% comment %} <li class="nav-item">
+                    <a class="nav-link" href="{% url 'api:all-questions' %}">Api</a>
+                </li>  {% endcomment %}
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

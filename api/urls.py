@@ -5,5 +5,5 @@ from . import views
 app_name = 'api'
 
 urlpatterns = [
-    path('random/1', views.Random1Question.as_view(), name='random-question'),
+    path('all-questions', views.QuestionList.as_view(), name='all-questions'),
 ]
