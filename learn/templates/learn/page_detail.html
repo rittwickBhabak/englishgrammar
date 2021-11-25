@@ -108,6 +108,10 @@
 
 <script>
 
+window.onload = ()=>{
+    document.documentElement.scrollTop = parseFloat('{{chapter.scroll_height}}')
+}
+
 let switchBtn = document.querySelector('#page-completed')
 let form = document.querySelector('#completion-form')
 switchBtn.addEventListener('click', e=>{
@@ -115,6 +119,11 @@ switchBtn.addEventListener('click', e=>{
     console.log('changing')
 })
 
+document.addEventListener('scroll', e=>{
+    let scrollHeight = document.documentElement.scrollTop
+    let dataList = [['s_height', scrollHeight], ['c_pk', '{{chapter.pk}}'], ["csrfmiddlewaretoken", '{{csrf_token}}']]
+    post("{% url 'learn:scroll-height' %}", dataList, ()=>{console.log('Height updated')}, ()=>{console.log('Failed to update height. Some error occoured')}, null, null)
+})
 
 </script>
 

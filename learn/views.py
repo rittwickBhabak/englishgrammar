@@ -1,5 +1,6 @@
 from django import urls
 from django.db.models import query_utils
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls.base import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, ListView, DeleteView, TemplateView
@@ -71,7 +72,7 @@ def add_question(request):
         if chapter and chapter.no_of_pages>int(page_no):
             if len(question) > 0 and len(answer) > 0:
                 Question.objects.create(question=question, answer=answer, rule=rule, chapter=chapter, page_no=page_no)
-                messages.success(request, 'Question added successfully')
+                # messages.success(request, 'Question added successfully')
                 return redirect(reverse('learn:page-detail', args=[chapter_pk, page_no]))
             else:
                 messages.error(request, 'Some error occoured')
@@ -142,3 +143,16 @@ def toggle_completion(request):
             PageComplition.objects.create(chapter=chapter, page_number=page_no)
 
         return redirect(reverse('learn:page-detail', args=[chapter_pk, page_no]))
+
+
+def scroll_height(request):
+    if request.method == "POST":
+        s_height = request.POST.get('s_height')
+        c_pk = request.POST.get('c_pk')
+
+        chapter = get_object_or_404(Chapter, pk=int(c_pk))
+        chapter.scroll_height = s_height 
+        chapter.save()
+        return JsonResponse({"status": "true", "message": "height updated"})
+    else:
+        return HttpResponse("Hi, You are cheating. ;-)")

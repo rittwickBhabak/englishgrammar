@@ -28,4 +28,5 @@ urlpatterns = [
     path("delete-question/<int:pk>/", views.delete_question, name="delete-question"),
     path("toggle-bookmark/<int:pk>/", views.toggle_bookmark, name="toggle-bookmark"),
     path("toggle-completion", views.toggle_completion, name="toggle-completion"),
+    path("scoll-height", views.scroll_height, name="scroll-height"),
 ]

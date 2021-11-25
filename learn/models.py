@@ -5,7 +5,8 @@ class Chapter(models.Model):
     title = models.CharField(max_length=100)
     slno = models.IntegerField(default=0)
     no_of_pages = models.IntegerField(default=0)
-
+    scroll_height = models.FloatField(default=0.0)
+    
     class Meta:
         ordering = ['slno']
         
