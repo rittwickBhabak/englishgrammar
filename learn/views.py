@@ -72,7 +72,7 @@ def add_question(request):
         if chapter and chapter.no_of_pages>int(page_no):
             if len(question) > 0 and len(answer) > 0:
                 Question.objects.create(question=question, answer=answer, rule=rule, chapter=chapter, page_no=page_no)
-                # messages.success(request, 'Question added successfully')
+                messages.success(request, 'Question added successfully')
                 return redirect(reverse('learn:page-detail', args=[chapter_pk, page_no]))
             else:
                 messages.error(request, 'Some error occoured')

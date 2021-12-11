@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+    <style>
+        .slide-in {
+            position: absolute;
+            top: 0;
+            animation: slowlyfade 2s 1;
+            margin-top: 75px;
+            background: blue;
+        }
+
+        @keyframes slowlyfade {
+            0% {
+                opacity: 1;
+                background: red;
+
+            }
+
+            25% {
+                opacity: 0.75;
+                background: yellow;
+            }
+
+            50% {
+                opacity: 0.50;
+                background: pink;
+            }
+
+            75% {
+                opacity: 0.25;
+                background: green;
+            }
+
+            100% {
+                opacity: 0;
+                display: none;
+                background: balck;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-in">this is nice box</div>
+</body>
+
+</html>

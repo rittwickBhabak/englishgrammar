@@ -27,6 +27,23 @@
     #parent-div::-webkit-scrollbar{
         width: 0 !important
     }
+    .slide-in{
+        position: absolute;
+        top: 0;
+        animation: slowlyfade 2s 1;
+        animation-delay: 3s;
+        margin-top: 75px;
+        animation-fill-mode: forwards;
+    }
+    @keyframes slowlyfade {
+        from {
+            opacity: 1;
+        }
+        to{
+            opacity: 0;
+        }
+    }
+
     </style>
     <title>{% block page_title %}{% endblock page_title %}</title>
   </head>
@@ -53,9 +70,9 @@
     <div class="container-fluid my-3">
         {% if messages %}
             {% for message in messages %}
-            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} alert-dismissible fade show" role="alert">
+            <div class="w-25 alert slide-in alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} alert-dismissible fade show" role="alert">
                 {{message}}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                {% comment %} <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> {% endcomment %}
             </div>
             {% endfor %}
         {% endif %}
