@@ -152,7 +152,7 @@ document.addEventListener('scroll', e=>{
         }, 1.5 * 1000)
     }
     function toTitleCase(string){
-        return string.toUpperCase().charAt(0) + string.slice(1)
+        return string.trim().toUpperCase().charAt(0) + string.trim().slice(1)
     }
     function startDictation(elementId, buttonId) {
 
